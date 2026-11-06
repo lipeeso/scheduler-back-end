@@ -1,0 +1,30 @@
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy import func
+from datetime import datetime
+from typing import  List,TYPE_CHECKING
+from api_scheduler.core.database import Base
+if TYPE_CHECKING:
+    from api_scheduler.models.schedulers import Scheduler
+
+
+class User(Base):
+    __tablename__ = "users"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    username: Mapped[str] = mapped_column(unique=True)
+    password: Mapped[str]
+    email: Mapped[str] = mapped_column(unique=True)
+    created_at: Mapped[datetime] = mapped_column(
+        server_default=func.now()
+    )
+    update_at: Mapped[datetime] = mapped_column(
+        server_default=func.now(), onupdate=func.now()
+    )
+
+schedulers: Mapped[List[Scheduler]] = relationship("Scheduler", back_populates="owner")
+    
+
+
+
+
+
