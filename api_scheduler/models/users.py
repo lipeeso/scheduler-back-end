@@ -2,9 +2,9 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import func
 from datetime import datetime
 from typing import  List,TYPE_CHECKING
-from api_scheduler.core.database import Base
+from api_scheduler.models import Base
 if TYPE_CHECKING:
-    from api_scheduler.models.schedulers import Scheduler
+    from api_scheduler.models import Scheduler
 
 
 class User(Base):
@@ -21,10 +21,9 @@ class User(Base):
         server_default=func.now(), onupdate=func.now()
     )
 
-schedulers: Mapped[List[Scheduler]] = relationship("Scheduler", back_populates="owner")
-    
-
-
+    schedulers: Mapped[List['Scheduler']] = relationship(
+        'Scheduler', back_populates='owner'
+    )
 
 
 

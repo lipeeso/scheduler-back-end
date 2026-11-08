@@ -3,9 +3,9 @@ from sqlalchemy import ForeignKey, String, Numeric, Integer, Text, func
 from enum import Enum
 from datetime import datetime
 from typing import Optional, TYPE_CHECKING
-from api_scheduler.core.database import Base
+from api_scheduler.models import Base
 if TYPE_CHECKING:
-    from api_scheduler.models.users import User
+    from api_scheduler.models import User
 
 class SchedulerType(str, Enum):
     CONFIRMED = "confirmed"
@@ -33,5 +33,5 @@ class Scheduler(Base):
         server_default=func.now(), onupdate=func.now()
     )
 
-    owner: Mapped["User"] = relationship("User", back_populates="schedulers")
+    owner: Mapped['User'] = relationship('User', back_populates='schedulers')
 
